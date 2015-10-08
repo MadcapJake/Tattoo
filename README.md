@@ -1,6 +1,5 @@
 ![Logo](https://raw.githubusercontent.com/MadcapJake/Tattoo/master/tattoo-banner.png)
 
-# Tattoo
 > *Tattoo A Terminal TOO*
 
 Tattoo is a terminal emulator program written in Python GTK3 and using VTE for terminal emulation.  Tattoo was created to provide an aesthetically pleasing terminal emulator for Gnome Shell.
