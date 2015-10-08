@@ -6,9 +6,13 @@ Tattoo is a terminal emulator program written in Python GTK3 and using VTE for t
 
 ### Goals
 
-* To provide a terminal app that fits the new Gnome look
+* To provide a terminal app that fits the Gnome look
 * To provide much of the functionality of Gnome Terminal
 * To add some additional niceties
+
+### Status
+
+Currently works as a basic terminal with tabs. However it doesn't have any customization as none of the menus have been implemented yet.  Unless you want to jump into the code and change VTE's settings, your terminal is stuck with the default settings (e.g., color).
 
 ### Roadmap
 
