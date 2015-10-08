@@ -34,5 +34,5 @@ class TattooHeaderBar(Gtk.HeaderBar):
 
         self.pack_end(search_button)
 
-    def set_header_title(title):
+    def set_header_title(self, title):
         self.props.title = title

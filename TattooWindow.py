@@ -39,8 +39,13 @@ class TattooWindow(Gtk.Window):
             )
 
         self.notebook.set_show_tabs(False)
+        self.notebook.connect(
+            "switch-page",
+            self.header_title_change
+            )
 
         self.connect("destroy", self.on_destroy)
+
 
 
     def open_new_tab(self, *data):
@@ -58,9 +63,14 @@ class TattooWindow(Gtk.Window):
 
         tab_index = \
             self.notebook.append_page(terminal, terminal.get_window_title())
-        self.notebook.set_current_page(tab_index)
-        terminal.connect("window-title-changed", self.terminal_title_change, self.notebook, tab_index)
         self.show_all()
+        self.notebook.set_current_page(tab_index)
+        terminal.connect(
+            "window-title-changed",
+            self.terminal_title_change,
+            self.notebook,
+            tab_index
+            )
 
     def open_searchbar(self, *data):
         pass
@@ -71,10 +81,13 @@ class TattooWindow(Gtk.Window):
     def on_destroy(self, widget):
         Gtk.main_quit()
 
+    def header_title_change(self, notebook, terminal, index):
+        # print args
+        title = terminal.get_window_title()
+        self.hb.set_header_title(title)
+
     def terminal_title_change(self, terminal, notebook, index):
         title = terminal.get_window_title()
-        print index
-        print notebook.get_current_page()
         if notebook.get_current_page() == index:
-            self.hb.set_header_title(title)
+            self.header_title_change(notebook, terminal, index)
         notebook.set_tab_label_text(terminal, title)
