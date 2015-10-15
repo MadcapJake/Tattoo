@@ -14,8 +14,9 @@
 # with Tattoo; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-from gi.repository import Gtk, Gio
-from window import TattooWindow
+from gi.repository import Gtk, Gio, GLib
+from tattoo import log
+from tattoo.window import TattooWindow
 
 class TattooApplication(Gtk.Application):
 
@@ -25,26 +26,29 @@ class TattooApplication(Gtk.Application):
     @log
     def __init__(self):
         Gtk.Application.__init__(self,
-                                 application_id='org.gnome.Tattoo'
+                                 application_id='org.gnome.Tattoo',
                                  flags=Gio.ApplicationFlags.FLAGS_NONE)
         GLib.set_application_name("Tattoo")
         GLib.set_prgname('Tattoo')
-        self.settings = Gio.Settings.new('org.gnome.Tattoo')
+        # self.settings = Gio.Settings.new('org.gnome.Tattoo')
 
         self._window = None
 
     @log
     def build_app_menu(self):
         builder = Gtk.Builder()
-
-        builder.add_from_resource('/org/gnome/Tattoo/app-menu.ui')
+        builder.add_from_file('data/app-menu.ui')
 
         menu = builder.get_object('app-menu')
         self.set_app_menu(menu)
 
-        newTerminalAction = Gio.SimpleAction.new('newTerminal', None)
-        newTerminalAction.connect('activate', self.newTerminal)
-        self.add_action(newTerminalAction)
+        newWindowAction = Gio.SimpleAction.new('newWindow', None)
+        newWindowAction.connect('activate', self.newWindow)
+        self.add_action(newWindowAction)
+
+        preferencesAction = Gio.SimpleAction.new('preferences', None)
+        preferencesAction.connect('activate', self.preferences)
+        self.add_action(preferencesAction)
 
         helpAction = Gio.SimpleAction.new('help', None)
         helpAction.connect('activate', self.help)
@@ -58,8 +62,14 @@ class TattooApplication(Gtk.Application):
         quitAction.connect('activate', self.quit)
         self.add_action(quitAction)
 
+
+
     @log
-    def new_terminal(self, action, param):
+    def new_window(self, action, param):
+        pass
+
+    @log
+    def preferences(self, action, param):
         pass
 
     @log
@@ -79,6 +89,10 @@ class TattooApplication(Gtk.Application):
     @log
     def quit(self, action=None, param=None):
         self._window.destroy()
+
+    @log
+    def newWindow(self, action, param):
+        pass
 
     def do_activate(self):
         if not self._window:

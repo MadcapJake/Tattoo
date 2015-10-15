@@ -13,3 +13,19 @@
 # You should have received a copy of the GNU General Public License along
 # with Tattoo; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+from gi.repository import Gtk
+
+from tattoo import log
+
+class TattooSearchBar(Gtk.SearchBar):
+
+    def __repr__(self):
+        return '<TattooSearchBar>'
+
+    @log
+    def __init__(self):
+        Gtk.SearchBar.__init__(self)
+        self.__entry = Gtk.SearchEntry()
+        self.connect_entry(self.__entry)
+        self.add(self.__entry)
